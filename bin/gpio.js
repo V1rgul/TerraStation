@@ -30,7 +30,7 @@ function construct(){
 			function set(val){
 				var v = ( (!!val) != inv ) ? 1 : 0;
 				console.log("GPIO ONOFF pin "+pin+" to "+v);
-				if(wpi) wiringpi.digitalWrite(pin, v);
+				if(wpi) spi.digitalWrite(pin, v);
 			}
 			set(0);
 
