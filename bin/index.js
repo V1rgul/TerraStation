@@ -1,8 +1,7 @@
 
-var gpio = require('./gpio');
-var ONOFFgpio = require('./ONOFFgpio');
+var gpio = require('./gpio')();
 
-var rain = ONOFFgpio(gpio, 20);
+var rain = gpio.onOff(20, true);
 
 var value = 1;
 
