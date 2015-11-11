@@ -10,7 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^2.10.2",
-    "flat-file-db": "^0.1.5"
+    "lodash": "^3.10.1",
+    "log4js": "^0.6.27",
+    "mongodb": "^2.0.48",
+    "schedule": "^0.1.0"
   },
   "optionalPeerDependencies": {
     "wiring-pi": "2.1.0"
