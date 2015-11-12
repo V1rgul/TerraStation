@@ -1,0 +1,77 @@
+$headerHeight:100px;
+
+body {
+	@include background-image(radial-gradient(circle at 50% 10%, #80a841, #237774));
+	background-size: cover;
+	font-family: 'Lato', sans-serif;
+}
+
+
+#header {
+	@include position(fixed, 0 0 null 0);
+	height: $headerHeight;
+	width: 100%;
+	font-size: 40px;
+	text-align: right;
+	color: #fff;
+	background: #000 url('../img/cham.jpg') no-repeat;
+	background-size: $headerHeight * 3;
+	border-bottom: 2px solid #000;
+	//box-shadow: 0 5px 10px black;
+
+	>span {
+		margin-right: 30px;
+		display: inline-block;
+		line-height: $headerHeight;
+		vertical-align: middle;
+		>span {
+			color: #69d08d;
+		}
+	}
+
+}
+
+#main {
+	margin-top: $headerHeight;
+	color: #fff;
+}
+
+#graph {
+	img {
+		width: 100%;
+
+	}
+}
+
+h2 {
+	float: left;
+	width: 100%;
+	font-weight: 300;
+	text-align: left;
+	margin: 10px 0 15px;
+	padding: 0 10px;
+	font-size: 60px;
+}
+
+.content {
+	//text-align: center;
+	font-weight: 300;
+	font-size: 40px;
+	margin-left: 30px;
+	.entry {
+		margin-top: 5px;
+
+		>span {
+			&:not(:first-child) {
+				margin-left: 30px;
+			}
+		}
+	}
+}
+
+#livecam {
+	>img {
+		width: 100%;
+		margin: 0 auto;
+	}
+}
