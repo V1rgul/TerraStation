@@ -1,10 +1,10 @@
-<html>
+<html ng-app="TerraStation">
 <head>
 	<link rel="stylesheet" href="libs/css/style.css" media="all" />
 	<script type="text/javascript" src="libs/js/script.js"></script>
 </head>
 
-<body>
+<body ng-controller="TerraStationMain">
 
 	<div id="header">
 		<span><span>Terra</span>Station</span>
@@ -24,31 +24,25 @@
 		</h2>
 
 		<div id="rain" class="content">
-			<div class="entry">
+			<div class="entry" ng-repeat="entry in settings.rain track by $index">
 				<span>
 					Start at: 
-					<input type="time" />
+					<input type="text" ng-model="entry.time"/>
 				</span>
 				<span>
 					Duration: 
-					<input type="time" />
+					<input type="text" ng-model="entry.duration"/>
 				</span>
 
-				<a class="icon">&#xE800;</a>
-			</div>
-			<div class="entry">
-				<span>
-					Start at: 
-					<input type="time" />
-				</span>
-				<span>
-					Duration: 
-					<input type="time" />
-				</span>
+				<a ng-click="deleteIndex(settings.rain,$index)" class="button">
+					<span class="icon">&#xE800;</span>
+				</a>
 
-				<a class="icon">&#xE800;</a>
 			</div>
 		</div>
+		<a ng-click="add(settings.rain)" class="add button">
+			+
+		</a>
 		<h2>
 			Light
 		</h2>

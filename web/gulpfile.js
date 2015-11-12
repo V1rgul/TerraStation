@@ -6,18 +6,35 @@ var gulp 		= require('gulp'),
 	connect		= require('gulp-connect'),
 	concat		= require('gulp-concat'),
 	sass 		= require('gulp-sass'),
+	uglify 		= require('gulp-uglify'),
 	sourcemaps  = require('gulp-sourcemaps');
 
 var folderBase = "src/", folderDest = "www/";
 
 var selectors = {
-	html		: folderBase + '*.html',
-	fonts		: folderBase + 'libs/fonts/*',
-	scss		: folderBase + 'libs/css/*.scss',
-	scssMain	: folderBase + 'libs/css/style.scss',
-	js			: folderBase + 'libs/js/*.js',
-	img			: folderBase + 'libs/img/*.{png,gif,jpg,svg}'
+	html		: '*.html',
+	fonts		: 'libs/fonts/*',
+	scss		: 'libs/css/*.scss',
+	scssMain	: 'libs/css/style.scss',
+	js			: [
+		'libs/js/angular.js',
+		'libs/js/angular-animate.js',
+		'libs/js/scripts.js'
+	],
+	img			: 'libs/img/*.{png,gif,jpg,svg}'
 };
+
+Object.keys(selectors).forEach(function(k){
+	var o = selectors;
+	var v = selectors[k];
+	if(!Array.isArray(v)){
+		v = [v];
+	}
+	v = v.map(function(s){
+		return folderBase + s;
+	});
+	selectors[k] = v;
+});
 
 
 var onError = function (err) {
@@ -55,7 +72,10 @@ gulp.task('scss', function()
 gulp.task('js', function() 
 {
 	return gulp.src(selectors.js, {base: folderBase}).pipe(plumber({ errorHandler: onError }))
-		.pipe(concat('libs/js/script.js'))
+		.pipe(sourcemaps.init())
+			.pipe(uglify())
+			.pipe(concat('libs/js/script.js'))
+		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(folderDest))
 		.pipe(connect.reload())	
 });

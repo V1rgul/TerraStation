@@ -1,11 +1,21 @@
 $headerHeight:100px;
 
 body {
-	@include background-image(radial-gradient(circle at 50% 10%, #80a841, #237774));
+	@include background-image(radial-gradient(circle at 50% 10%, $mainColor1, $mainColor2));
 	background-size: cover;
 	font-family: 'Lato', sans-serif;
 }
 
+
+
+
+
+.button {
+	background: darken(mix($mainColor1, $mainColor2), 20%);
+	color: white;
+	border: 0;
+	padding: 3px 8px;
+}
 
 #header {
 	@include position(fixed, 0 0 null 0);
@@ -24,6 +34,7 @@ body {
 		display: inline-block;
 		line-height: $headerHeight;
 		vertical-align: middle;
+
 		>span {
 			color: #69d08d;
 		}
@@ -56,17 +67,41 @@ h2 {
 .content {
 	//text-align: center;
 	font-weight: 300;
-	font-size: 40px;
-	margin-left: 30px;
-	.entry {
-		margin-top: 5px;
+	font-size: 20px;
+	margin-left: 10px;
 
-		>span {
+	> .entry {
+		margin-top: 10px;
+
+		> span {
 			&:not(:first-child) {
 				margin-left: 30px;
 			}
 		}
+
+		&.ng-enter,
+		&.ng-leave {
+			@include transition(max-height .3s);
+			overflow: hidden;
+		}
+
+		&.ng-enter,
+		&.ng-leave-active {
+			max-height: 0;
+		}
+
+		&.ng-enter-active,
+		&.ng-leave {
+			max-height: 1.5em;
+		}
 	}
+}
+
+.add {
+	display: block;
+	margin: 0 10px;	
+	text-align: center;
+	margin-top: 10px;
 }
 
 #livecam {

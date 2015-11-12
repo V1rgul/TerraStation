@@ -8,8 +8,18 @@ html,
 body {
   min-height: 100%; }
 
-a {
-  cursor: pointer; }
+a,
+button {
+  -webkit-transition: -webkit-transform 0.1s, color 0.1s, background 0.1s !important;
+  -moz-transition: -moz-transform 0.1s, color 0.1s, background 0.1s !important;
+  transition: transform 0.1s, color 0.1s, background 0.1s !important;
+  line-height: 1; }
+  a:not(.disabled),
+  button:not(.disabled) {
+    cursor: pointer; }
+    a:not(.disabled):active,
+    button:not(.disabled):active {
+      transform: scale(0.94); }
 
 @font-face {
   font-family: 'fontello';
@@ -40,6 +50,12 @@ body {
   background-image: radial-gradient(circle at 50% 10%, #80a841, #237774);
   background-size: cover;
   font-family: 'Lato', sans-serif; }
+
+.button {
+  background: #2d4f32;
+  color: white;
+  border: 0;
+  padding: 3px 8px; }
 
 #header {
   position: fixed;
@@ -80,12 +96,30 @@ h2 {
 
 .content {
   font-weight: 300;
-  font-size: 40px;
-  margin-left: 30px; }
-  .content .entry {
-    margin-top: 5px; }
-    .content .entry > span:not(:first-child) {
+  font-size: 20px;
+  margin-left: 10px; }
+  .content > .entry {
+    margin-top: 10px; }
+    .content > .entry > span:not(:first-child) {
       margin-left: 30px; }
+    .content > .entry.ng-enter,
+    .content > .entry.ng-leave {
+      -webkit-transition: max-height 0.3s;
+      -moz-transition: max-height 0.3s;
+      transition: max-height 0.3s;
+      overflow: hidden; }
+    .content > .entry.ng-enter,
+    .content > .entry.ng-leave-active {
+      max-height: 0; }
+    .content > .entry.ng-enter-active,
+    .content > .entry.ng-leave {
+      max-height: 200px; }
+
+.add {
+  display: block;
+  margin: 0 10px;
+  text-align: center;
+  margin-top: 10px; }
 
 #livecam > img {
   width: 100%;
