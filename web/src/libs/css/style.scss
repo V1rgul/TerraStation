@@ -11,9 +11,8 @@ body {
 	min-height: 100%;
 }
 
-a,
-button {
-	@include transition(transform .1s, color .1s, background .1s !important);
+.button {
+	@include transition(transform .1s ease, color .1s, background .1s);
 	line-height: 1;
 
 	&:not(.disabled) {

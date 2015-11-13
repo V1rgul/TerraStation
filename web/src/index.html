@@ -24,20 +24,21 @@
 		</h2>
 
 		<div id="rain" class="content">
-			<div class="entry" ng-repeat="entry in settings.rain track by $index">
-				<span>
-					Start at: 
-					<input type="text" ng-model="entry.time"/>
-				</span>
-				<span>
-					Duration: 
-					<input type="text" ng-model="entry.duration"/>
-				</span>
+			<div class="entry" ng-repeat="entry in settings.rain">
+				<div>
+					<span>
+						Start at: 
+						<input type="text" ng-model="entry.time"/>
+					</span>
+					<span>
+						Duration: 
+						<input type="text" ng-model="entry.duration"/>
+					</span>
 
-				<a ng-click="deleteIndex(settings.rain,$index)" class="button">
-					<span class="icon">&#xE800;</span>
-				</a>
-
+					<a ng-click="deleteIndex(settings.rain,$index)" class="button">
+						<span class="icon">&#xE800;</span>
+					</a>
+				</div>
 			</div>
 		</div>
 		<a ng-click="add(settings.rain)" class="add button">
