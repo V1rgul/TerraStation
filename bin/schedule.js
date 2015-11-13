@@ -1,8 +1,4 @@
 
-
-
-
-
 var schedule = (function(){
 
 	var log 	= require('log4js').getLogger('Schedule');

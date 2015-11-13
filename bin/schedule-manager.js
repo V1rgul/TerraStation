@@ -17,7 +17,7 @@ var scheduleManager = (function(){
 
 		if(!time) return;
 
-		if(typeof time !== 'object') time = [time];
+		if(!Array.isArray(time)) time = [time];
 
 		jobs[name] = time.map(function(t){
 			if(t.interval && t.time){
@@ -48,3 +48,33 @@ var scheduleManager = (function(){
 })();
 
 module.exports = scheduleManager;
+
+
+
+// var log = require('log4js').getLogger("TESTS");
+// var Time = require('./time');
+
+// function logFactory(name, interval){
+// 	var s, n = 0;
+// 	return function(){
+// 		if(!s) s = Date.now();
+// 		else n++;
+// 		var diff = Date.now() - s;
+// 		log.info(name, n, "drift=", diff-interval*n);
+// 	};
+// }
+
+
+// var interval = new Time({s: 1}).value;
+// scheduleManager.set(
+// 	"interval",
+// 	{interval:interval},
+// 	logFactory("interval", interval)
+// );
+
+// scheduleManager.set(
+// 	"time",
+// 	{ time: Time.nowOccurence().value+Time.S },
+// 	logFactory(    "time",   Time.D)
+// );
+
