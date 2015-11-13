@@ -11,6 +11,10 @@ body {
 	min-height: 100%;
 }
 
+body {
+	font-size: xx-large;
+}
+
 .button {
 	@include transition(transform .1s ease, color .1s, background .1s);
 	line-height: 1;
