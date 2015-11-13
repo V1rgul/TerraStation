@@ -5,7 +5,7 @@ var gulp 		= require('gulp'),
 	plumber		= require('gulp-plumber'),
 	connect		= require('gulp-connect'),
 	concat		= require('gulp-concat'),
-	sass 		= require('gulp-sass'),
+	sass 		= require('gulp-ruby-sass'),
 	uglify 		= require('gulp-uglify'),
 	sourcemaps  = require('gulp-sourcemaps');
 
@@ -48,42 +48,43 @@ gulp.task('html', function()
 {
 	return gulp.src(selectors.html, {base: folderBase}).pipe(plumber({ errorHandler: onError }))
 		.pipe(gulp.dest(folderDest))
-		.pipe(connect.reload())	
+		.pipe(connect.reload());
 });
 
 gulp.task('fonts', function() 
 {
 	return gulp.src(selectors.fonts, {base: folderBase}).pipe(plumber({ errorHandler: onError }))
 		.pipe(gulp.dest(folderDest))
-		.pipe(connect.reload())	
+		.pipe(connect.reload());
 });
 
 
 gulp.task('scss', function() 
 {
-	return gulp.src(selectors.scssMain, {base: folderBase}).pipe(plumber({ errorHandler: onError }))
-		.pipe(sourcemaps.init())
-            .pipe(sass())
-        .pipe(sourcemaps.write('.'))  
+	// return gulp.src(selectors.scssMain, {base: folderBase}).pipe(plumber({ errorHandler: onError }))
+	// 	.pipe(sourcemaps.init())
+	// 		.pipe(sass())
+	return sass(selectors.scssMain, {base: folderBase, sourcemap:true}).pipe(plumber({ errorHandler: onError }))
+		.pipe(sourcemaps.write('.'))  
 		.pipe(gulp.dest(folderDest))
-		.pipe(connect.reload())	
+		.pipe(connect.reload());
 });
 
 gulp.task('js', function() 
 {
 	return gulp.src(selectors.js, {base: folderBase}).pipe(plumber({ errorHandler: onError }))
 		.pipe(sourcemaps.init())
-			.pipe(uglify())
+			//.pipe(uglify())
 			.pipe(concat('libs/js/script.js'))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(folderDest))
-		.pipe(connect.reload())	
+		.pipe(connect.reload());
 });
 
 gulp.task('img', function() {
 	return gulp.src(selectors.img,  {base: folderBase}).pipe(plumber({ errorHandler: onError }))
 		.pipe(gulp.dest(folderDest))
-		.pipe(connect.reload())	
+		.pipe(connect.reload());
 });
 
 
