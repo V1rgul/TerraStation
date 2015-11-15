@@ -1,0 +1,34 @@
+
+
+$inputsBackground: darken(mix($mainColor1, $mainColor2), 20%);
+$inputsColor: white;
+
+
+.button,
+select {
+	background: $inputsBackground;
+	color: $inputsColor;
+	border: 0;
+	font-size: inherit;
+	font-family: inherit;
+}
+
+select {
+	padding: 0 5px;
+}
+
+.button {
+	padding: 5px 5px;
+	display: inline-block;	
+	//line-height: 1;
+
+	@include transition(transform .1s ease, color .1s, background .1s);
+
+	&:not(.disabled) {
+		cursor: pointer;
+
+		&:active {
+			transform: scale(.94);
+		}
+	}
+}

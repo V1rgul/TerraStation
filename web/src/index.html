@@ -26,13 +26,14 @@
 		<div id="rain" class="content">
 			<div class="entry" ng-repeat="entry in settings.rain">
 				<div>
+					
 					<span>
-						Start at: 
-						<input type="text" ng-model="entry.time"/>
+						Start : 
+						<nice-time ng-model="entry.time"></nice-time>
 					</span>
 					<span>
 						Duration: 
-						<input type="text" ng-model="entry.duration"/>
+						<nice-time ng-model="entry.duration"></nice-time>
 					</span>
 
 					<a ng-click="deleteIndex(settings.rain,$index)" class="button">

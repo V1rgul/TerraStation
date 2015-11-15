@@ -7,6 +7,8 @@ var gulp 		= require('gulp'),
 	concat		= require('gulp-concat'),
 	sass 		= require('gulp-ruby-sass'),
 	uglify 		= require('gulp-uglify'),
+	modernizr	= require('gulp-modernizr'),
+	merge2		= require('merge2'),
 	sourcemaps  = require('gulp-sourcemaps');
 
 var folderBase = "src/", folderDest = "www/";
@@ -19,6 +21,8 @@ var selectors = {
 	js			: [
 		'libs/js/angular.js',
 		'libs/js/angular-animate.js',
+		'libs/js/polyfills.js',
+		'libs/js/directives.js',
 		'libs/js/scripts.js'
 	],
 	img			: 'libs/img/*.{png,gif,jpg,svg}'
@@ -70,12 +74,16 @@ gulp.task('scss', function()
 		.pipe(connect.reload());
 });
 
-gulp.task('js', function() 
-{
-	return gulp.src(selectors.js, {base: folderBase}).pipe(plumber({ errorHandler: onError }))
+gulp.task('js', function() {
+
+	return merge2(
+			gulp.src(selectors.js, {base: folderBase})
+				.pipe(modernizr()),
+			gulp.src(selectors.js, {base: folderBase})
+		)
 		.pipe(sourcemaps.init())
-			//.pipe(uglify())
 			.pipe(concat('libs/js/script.js'))
+			//.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(folderDest))
 		.pipe(connect.reload());

@@ -7,17 +7,6 @@ body {
 }
 
 
-
-
-
-.button {
-	display: inline-block;
-	background: darken(mix($mainColor1, $mainColor2), 20%);
-	color: white;
-	border: 0;
-	padding: 3px 8px;
-}
-
 #header {
 	@include position(fixed, 0 0 null 0);
 	height: $headerHeight;

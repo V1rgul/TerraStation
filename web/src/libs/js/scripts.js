@@ -1,13 +1,13 @@
 
 
-var app = angular.module("TerraStation", ['ngAnimate'])
+var app = angular.module("TerraStation", ['ngAnimate','niceTime'])
 
 .controller("TerraStationMain", ['$scope', function($scope){
 
 	$scope.settings = {
 		rain: [
-			{ time:"10:00:00", duration:"5:00" },
-			{ time:"19:00:00", duration:"5:00" }
+			{ time: { h:10, m:0 }, duration:{ m:5 } },
+			{ time: { h:19, m:0 }, duration:{ m:5 } },
 		],
 		light : {
 			start:{h:10,m:0},

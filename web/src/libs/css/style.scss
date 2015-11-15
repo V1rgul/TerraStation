@@ -6,6 +6,8 @@
 	box-sizing: border-box;
 }
 
+@import 'polyfills';
+
 html,
 body {
 	min-height: 100%;
@@ -15,22 +17,13 @@ body {
 	font-size: xx-large;
 }
 
-.button {
-	@include transition(transform .1s ease, color .1s, background .1s);
-	line-height: 1;
-
-	&:not(.disabled) {
-		cursor: pointer;
-
-		&:active {
-			transform: scale(.94);
-		}
-	}
-}
 
 $mainColor1: #80a841;
 $mainColor2: #237774;
 
+
 @import 'fonts';
+
+@import 'inputs';
 
 @import 'layout';
