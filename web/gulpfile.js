@@ -21,8 +21,7 @@ var selectors = {
 	js			: [
 		'libs/js/angular.js',
 		'libs/js/angular-animate.js',
-		'libs/js/polyfills.js',
-		'libs/js/directives.js',
+		'libs/js/niceTime.js',
 		'libs/js/scripts.js'
 	],
 	img			: 'libs/img/*.{png,gif,jpg,svg}'
@@ -82,8 +81,8 @@ gulp.task('js', function() {
 			gulp.src(selectors.js, {base: folderBase})
 		)
 		.pipe(sourcemaps.init())
-			.pipe(concat('libs/js/script.js'))
 			//.pipe(uglify())
+			.pipe(concat('libs/js/script.js', {newLine: '\n//===================================\n'}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(folderDest))
 		.pipe(connect.reload());

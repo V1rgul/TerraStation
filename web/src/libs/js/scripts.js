@@ -1,5 +1,7 @@
 
+console.log("read scripts");
 
+//*
 var app = angular.module("TerraStation", ['ngAnimate','niceTime'])
 
 .controller("TerraStationMain", ['$scope', function($scope){
@@ -24,3 +26,5 @@ var app = angular.module("TerraStation", ['ngAnimate','niceTime'])
 	};
 
 }]);
+
+//*/
