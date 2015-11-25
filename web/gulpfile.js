@@ -16,11 +16,13 @@ var folderBase = "src/", folderDest = "www/";
 var selectors = {
 	html		: '*.html',
 	fonts		: 'libs/fonts/*',
-	scss		: 'libs/css/*.scss',
+	css			: 'libs/css/*.css',
+	cssAll		: 'libs/css/*.{css,scss}',
 	scssMain	: 'libs/css/style.scss',
 	js			: [
 		'libs/js/angular.js',
 		'libs/js/angular-animate.js',
+		'libs/js/angular-chart.mn.js',
 		'libs/js/niceTime.js',
 		'libs/js/scripts.js'
 	],
@@ -62,12 +64,17 @@ gulp.task('fonts', function()
 });
 
 
-gulp.task('scss', function() 
+gulp.task('cssAll', function() 
 {
 	// return gulp.src(selectors.scssMain, {base: folderBase}).pipe(plumber({ errorHandler: onError }))
 	// 	.pipe(sourcemaps.init())
 	// 		.pipe(sass())
-	return sass(selectors.scssMain, {base: folderBase, sourcemap:true}).pipe(plumber({ errorHandler: onError }))
+	return merge2(
+			gulp.src(selectors.css, {base: folderBase})
+				.pipe(sourcemaps.init()),
+			sass(selectors.scssMain, {base: folderBase, sourcemap:true})//.pipe(plumber({ errorHandler: onError }))
+		)
+		.pipe(concat('libs/css/style.css'))
 		.pipe(sourcemaps.write('.'))  
 		.pipe(gulp.dest(folderDest))
 		.pipe(connect.reload());
@@ -81,7 +88,7 @@ gulp.task('js', function() {
 			gulp.src(selectors.js, {base: folderBase})
 		)
 		.pipe(sourcemaps.init())
-			//.pipe(uglify())
+			.pipe(uglify())
 			.pipe(concat('libs/js/script.js', {newLine: '\n//===================================\n'}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(folderDest))
@@ -95,14 +102,14 @@ gulp.task('img', function() {
 });
 
 
-gulp.task('all', ['html', 'fonts', 'scss', 'js', 'img'], function(){} );
+gulp.task('all', ['html', 'fonts', 'cssAll', 'js', 'img'], function(){} );
 
 gulp.task('watch', ['all'], function() {
-	gulp.watch(selectors.html, 	['html']);
-	gulp.watch(selectors.scss, 	['scss']);
-	gulp.watch(selectors.js, 	['js']  );
-	gulp.watch(selectors.img, 	['img'] );
-	gulp.watch(selectors.fonts,	['fonts'] );
+	gulp.watch(selectors.html, 		['html']);
+	gulp.watch(selectors.cssAll, 	['cssAll']);
+	gulp.watch(selectors.js, 		['js']  );
+	gulp.watch(selectors.img, 		['img'] );
+	gulp.watch(selectors.fonts,		['fonts'] );
 });
 
 
