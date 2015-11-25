@@ -26,7 +26,7 @@ var app = angular.module("TerraStation", ['ngAnimate','chart.js','niceTime'])
 	};
 
 
-
+	$scope.graph = {};
 	$scope.graph.labels = ["January", "February", "March", "April", "May", "June", "July"];
 	$scope.graph.series = ['Series A', 'Series B'];
 	$scope.graph.data = [

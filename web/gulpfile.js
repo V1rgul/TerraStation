@@ -22,6 +22,7 @@ var selectors = {
 	js			: [
 		'libs/js/angular.js',
 		'libs/js/angular-animate.js',
+		'libs/js/Chart.min.js',
 		'libs/js/angular-chart.min.js',
 		'libs/js/niceTime.js',
 		'libs/js/scripts.js'
