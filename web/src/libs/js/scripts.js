@@ -2,7 +2,7 @@
 console.log("read scripts");
 
 //*
-var app = angular.module("TerraStation", ['ngAnimate','niceTime'])
+var app = angular.module("TerraStation", ['ngAnimate','chart.js','niceTime'])
 
 .controller("TerraStationMain", ['$scope', function($scope){
 
@@ -25,6 +25,15 @@ var app = angular.module("TerraStation", ['ngAnimate','niceTime'])
 		arr.push({});
 	};
 
-}]);
 
-//*/
+
+	$scope.graph.labels = ["January", "February", "March", "April", "May", "June", "July"];
+	$scope.graph.series = ['Series A', 'Series B'];
+	$scope.graph.data = [
+		[65, 59, 80, 81, 56, 55, 40],
+		[28, 48, 40, 19, 86, 27, 90]
+	];
+	$scope.graph.onClick = function (points, evt) {
+		console.log(points, evt);
+	};
+}]);
