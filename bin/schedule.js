@@ -3,36 +3,49 @@ var schedule = (function(){
 
 	var log 	= require('log4js').getLogger('Schedule');
 	var Time 	= require('./time');
+	var TimeBlock = require('./time-block');
 
-	function Job(fn){
+	function Job(timeBlock, fnStart, fnEnd){
 		var self = this;
-		var timeout, last, next;
+		var timeout;
 
-		function fnStart(){
-			last = next;
-			fn();
+		fnEnd = fnEnd || function(){};
+
+		function _fnStart(){
+			fnStart();
+			var now = Date.now();
+			var end = timeBlock.end.todayOccurence();
+			var t = end - now;
+			timeout = setTimeout(_fnEnd, t);
+		}
+		function _fnEnd(){
+			fnEnd();
 			reschedule();
 		}
 
 		function reschedule(){
 			//log.debug("self", self);
 			var now = Date.now();			
-			next = self.next();
+			var next = self.next();
 			var t = next - now;
-			timeout = setTimeout(fnStart, t);
+			timeout = setTimeout(_fnStart, t);
 		}
 
 		this.destroy = function(){
 			clearTimeout(timeout);
 		};
-		this.last = function(){
-			return last;
-		};
 		this.next = function(){
-			//log.debug("next()", last, next, self.calcNext());
-			if(!last || last == next){
-				next = self.calcNext();
-				log.debug("job next", next);
+			//log.debug("nextOccurence", time.nextOccurence());
+			var now = Date.now();
+			var next = timeBlock.start.todayOccurence();
+			if(next < now){ 
+				//next is before now
+				var end = timeBlock.end.todayOccurence();
+				if(end < now){
+					//and end is before now
+					//check only usefull if Job registered during its hypothetical execution
+					next += Time.D;
+				}
 			}
 			return next;
 		};
@@ -41,46 +54,9 @@ var schedule = (function(){
 		reschedule();
 	}
 
-
-
-	function JobInterval(interval, fn){
-		var self = this;
-
-		this.calcNext = function(){
-			var last = self.last();
-
-			if(!last) return Date.now();
-			return last + interval;
-		};
-		Job.call(this, fn);
-	}
-
-	function JobTime(time, fn){
-
-		this.calcNext = function(){
-			//log.debug("nextOccurence", time.nextOccurence());
-			return time.nextOccurence();
-		};
-		Job.call(this, fn);
-	}
-
-
-	function createInterval(interval, fn){
-		return new JobInterval( new Time(interval).value, fn );
-	}
-	function createTime(time, fn){
-		return new JobTime    ( new Time(time)  , fn );
-	}
-
-	function create(type, timeSetting, fn){
-		if     (type === "interval") return createInterval(timeSetting, fn);
-		else if(type === "time"    ) return createTime    (timeSetting, fn);
-	}
-
-	create.interval = createInterval;
-	create.time     = createTime;
-
-	return create;
+	return function(timeBlock, fnStart, fnEnd){
+		return new Job(new TimeBlock(timeBlock), fnStart, fnEnd);
+	};
 })();
 
 module.exports = schedule;
@@ -90,19 +66,22 @@ module.exports = schedule;
 // var log = require('log4js').getLogger("TESTS");
 // var Time = require('./time');
 
-// function logFactory(name, interval){
-// 	var s, n = 0;
-// 	return function(){
-// 		if(!s) s = Date.now();
-// 		else n++;
-// 		var diff = Date.now() - s;
-// 		log.info(name, n, "drift=", diff-interval*n);
-// 	};
-// }
 
+// var almostAllDay = schedule(
+// 	{
+// 		start:{m:1},
+// 		end:{h:23,m:59}
+// 	},
+// 	function(){	log.info("all-day:start", new Date()); },
+// 	function(){	log.info("all-day: end", new Date()); }
+// );
 
-//var interval = new Time({s: 1}).value;
-//schedule.interval(          interval, logFactory("interval", interval) );
-
-// schedule.time    ( Time.nowOccurence().value+Time.S, logFactory(    "time",   Time.D) );
-
+// var nowToday = Time.nowOccurence().value;
+// var in10s = schedule(
+// 	{
+// 		start: nowToday+(new Time({s:10}).value),
+// 		end: nowToday+(new Time({s:20}).value)
+// 	},
+// 	function(){	log.info("in10s  :start", new Date()); },
+// 	function(){	log.info("in10s  : end", new Date()); }
+// );
