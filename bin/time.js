@@ -69,39 +69,38 @@ var Time = (function(){
 
 	var inDayFields = sortedFields.slice(sortedFields.indexOf("h"));
 
-	var dateSetters = {
-		ms: Date.prototype.setMilliseconds,
-		s : Date.prototype.setSeconds,
-		m : Date.prototype.setMinutes,
-		h : Date.prototype.setHours
+	var dateFn = {
+		get : {
+			ms: Date.prototype.getMilliseconds,
+			s : Date.prototype.getSeconds,
+			m : Date.prototype.getMinutes,
+			h : Date.prototype.getHours
+		},
+		set : {
+			ms: Date.prototype.setMilliseconds,
+			s : Date.prototype.setSeconds,
+			m : Date.prototype.setMinutes,
+			h : Date.prototype.setHours
+		},
 	};
-	Time.prototype.nextOccurence = function(){
+	Time.prototype.todayOccurence = function(){
 		if(this.value >= values.d){
 			log.error("cant calc nextOccurence, time > 1 day");
 			return null;
 		}
 		var d = new Date();
 		inDayFields.forEach(function(f){
-			dateSetters[f].call(d, this[f]);
+			dateFn.set[f].call(d, this[f]);
 		}.bind(this));
 		d = d.getTime();
-		if( d < Date.now() ){
-			d += values.d;
-		}
-		return d;
-	};
 
-	var dateGetters = {
-		ms: Date.prototype.getMilliseconds,
-		s : Date.prototype.getSeconds,
-		m : Date.prototype.getMinutes,
-		h : Date.prototype.getHours
+		return d;
 	};
 	Time.nowOccurence = function(){
 		var d = new Date();
 		var r = {};
 		inDayFields.forEach(function(f){
-			r[f] = dateGetters[f].apply(d);
+			r[f] = dateFn.get[f].apply(d);
 		});
 		log.debug(r);
 		return new Time(r);
