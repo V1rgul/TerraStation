@@ -21,7 +21,7 @@ var TimeBlock = (function(){
 		}else{
 			if(!o.duration) log.warn("no end nor duration, using duration=0");
 			this.duration = new Time(o.duration || 0);
-			this.end = new Time(this.time.value + this.duration.value);
+			this.end = new Time(this.start.value + this.duration.value);
 		}
 	}
 
